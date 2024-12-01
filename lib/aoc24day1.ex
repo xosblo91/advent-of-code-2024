@@ -9,7 +9,7 @@ defmodule AOC24Day1 do
       Enum.zip(sorted_list1, sorted_list2)
       |> Enum.reduce(0, fn {val1, val2}, acc -> acc + abs(val1 - val2) end)
 
-    IO.puts("Sum of differences: #{sum}")
+    IO.puts("sum: #{sum}")
   end
 
   def part2 do
@@ -21,7 +21,7 @@ defmodule AOC24Day1 do
         acc + num * count_in_list2
       end)
 
-    IO.puts("Sum of multiplications: #{sum}")
+    IO.puts("sum: #{sum}")
   end
 
   def read do
