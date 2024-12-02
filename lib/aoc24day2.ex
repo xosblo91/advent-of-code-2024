@@ -3,8 +3,8 @@ defmodule AOC24Day2 do
     s = read()
 
     result =
-      Enum.reduce(s, 0, fn sublist, acc ->
-        if maxDiff(sublist) and (decreasing(sublist) or increasing(sublist)) do
+      Enum.reduce(s, 0, fn list, acc ->
+        if safe(list) do
           acc + 1
         else
           acc
@@ -18,18 +18,33 @@ defmodule AOC24Day2 do
     s = read()
 
     result =
-      Enum.reduce(s, 0, fn sublist, acc ->
-        if maxDiff(sublist) and (decreasing(sublist) or increasing(sublist)) do
+      Enum.reduce(s, 0, fn list, acc ->
+        if safe(list) do
           acc + 1
         else
-          acc
+          if safe_with_one_removal(list) do
+            acc + 1
+          else
+            acc
+          end
         end
       end)
 
     IO.inspect(result)
   end
 
-  def maxDiff(list) do
+  def safe_with_one_removal(list) do
+    Enum.any?(0..(length(list) - 1), fn idx ->
+      updated_list = List.delete_at(list, idx)
+      safe(updated_list)
+    end)
+  end
+
+  def safe(list) do
+    max_diff(list) and (decreasing(list) or increasing(list))
+  end
+
+  def max_diff(list) do
     Enum.chunk_every(list, 2, 1, :discard)
     |> Enum.all?(fn [a, b] -> abs(a - b) >= 1 and abs(a - b) <= 3 end)
   end
