@@ -34,8 +34,10 @@ defmodule AOC24Day2 do
   end
 
   def safe_with_one_removal(list) do
-    Enum.any?(0..(length(list) - 1), fn idx ->
-      updated_list = List.delete_at(list, idx)
+    list
+    |> Enum.with_index()
+    |> Enum.any?(fn {_, index} ->
+      updated_list = List.delete_at(list, index)
       safe(updated_list)
     end)
   end
